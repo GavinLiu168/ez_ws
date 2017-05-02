@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ez-ws聊天窗口案例</title>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">    
+    <link rel="stylesheet" type="text/css" href="css/style.css">    
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.flatui.css" />
+</head>
+<body>
+<div data-role="page" >
+    <div data-role="header" class="header linear-g" style="position:fixed;top:0px;z-index:999">
+		
+		<a class="text-center col-xs-12">ez-ws聊天窗口案例<br/>(Reserved by Gavin.Liu)</a>
+        
+    </div> 
+
+    <div  style="position:fixed;right:0px;top:0px;width:15%;z-index:999" >
+            <div style="padding-bottom:100%">
+                <img src="images/music.gif" style="position:absolute;width:100%;height:100%">
+            </div>
+    </div>
+
+     <div data-role="content" class="container" role="main"  style="margin-top:80px;margin-bottom:80px" id="main-container">
+        <div class="alert alert-success" id="myAlert" >
+            <a href="#" class="close" data-dismiss="alert">
+                &times;
+            </a>
+            <strong>Tip：</strong> Wear Headphones and enjoy music<br/>(带上耳机可听歌哦~)
+        </div>
+
+        <ul class="content-reply-box mg10"  id="main-list">
+           
+           
+        </ul>
+       
+    </div>
+
+     <div data-role="header col-xs-12" class="header linear-g" data-role="navbar" style="position:fixed;bottom:0px;z-index:999;padding-left:15px">
+        	<div class="col-xs-3 " style="padding: 0px;margin:0px">
+        		<label>Nickname：<br/>(昵称)</label>
+        	</div>
+        	<div class="col-xs-6" style="padding: 0px;margin:0px;">
+        		<input type="text" class="form-control" placeholder="nick name" id="nick_name" value="Tom">
+        	</div>
+        	<div class="col-xs-12" style="padding:0px;margin:0px;margin-top:5px">
+	        	<div class="col-xs-9 " style="padding: 0px;margin:0px">
+	        		<input type="text" class="form-control" placeholder="send sth..." id="content" value="123">
+	        	</div>
+	        	<div class="col-xs-3" style="margin:0px;">
+	        		<button type="button" id="send" class="btn btn-primary" role="button">send</button>
+	        	</div>
+        	</div>
+
+    </div>
+
+</div>
+</body>
+</html>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.0-rc.1.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/my.js"></script>
