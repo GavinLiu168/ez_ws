@@ -110,3 +110,20 @@ EZ_WS使用了多进程模式以增大服务的并发能力，但windows环境�
 		//充值数据帧
 		$wf->reset();
 
+5.异步任务（windows环境下将退化为同步任务）
+	
+	<?php
+		require_once('../../ez_ws/ez_ws.php');
+		use Lib\WsFrame;
+		use Lib\Task;
+		use Lib\WsServer;
+
+		class MyTask extends Task{
+		
+			
+			//必须继承实现的方法
+			protected function run(){
+				echo "hello mytask";
+			}
+		
+		}
