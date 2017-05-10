@@ -1,5 +1,5 @@
 ## EZ_WS ##
-php frame for service of websocket-rfc(Version 13)
+php framework for service of websocket-rfc(Version 13)
 
 ## Dependence ##
 1. php version >= 5.6
