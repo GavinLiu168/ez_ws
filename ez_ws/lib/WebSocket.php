@@ -28,6 +28,8 @@ class WebSocket{
 
 	public $eventCall = [];
 
+	private $frame_status_Code = 0; //关闭websocket的帧的结束帧的状态码
+
 	//io stream status
 	const STEP_START = 1;
 	const STEP_CONTINUE = 2;
@@ -94,7 +96,8 @@ class WebSocket{
 	 */
 	public function close(){
 
-		isset($this->eventCall['close']) && $this->eventCall['close']($this->worker->server,$this->resId);
+		isset($this->eventCall['close']) && $this->eventCall['close']($this->worker->server,$this->resId,$this->frame_status_Code);
+
 		$this->push(WsFrame::closeFrame());
 		$this->closed = true;
 		@socket_close($this->socket);
@@ -107,7 +110,10 @@ class WebSocket{
 	public function receive($data){
 		if(strlen($data)>0){
 	  		if(!$this->isHandShake){
-	  			$this->handshake($data);
+	  			if(!$this->handshake($data)){
+                    $this->do_close();
+	  			    return;
+                }
 	  			$this->isHandShake = true;
 	  			isset($this->eventCall['open']) && $this->eventCall['open']($this->worker->server,$this->resId);
 	  		}else{
@@ -135,6 +141,14 @@ class WebSocket{
 		}
 	}*/
 
+    /**
+     * 主动关闭socket
+     */
+	public function do_close(){
+        $this->closed = true;
+        $this->worker->close($this->resId);
+    }
+
 	/**
 	 * used to send frame to client
 	 */
@@ -145,8 +159,7 @@ class WebSocket{
 		$res = @socket_write($this->socket, $wf->buf, strlen($wf->buf));
 		if($res === false){
 			$this->log("socket:{$this->resId} write error!");
-			$this->closed = true;
-			$this->worker->close($this->resId);
+            $this->do_close();
 			return false;
 		}
 		return true;
@@ -219,6 +232,9 @@ class WebSocket{
 		switch($frame->opcode){
 			case WsFrame::OPCODE_CLOSE_FRAME:
 				//close event
+                if($frame->payload==2){
+                    $this->frame_status_Code = unpack("n",$frame->body)[1];
+                }
 				$this->worker->close($this->resId);
 				break;
 			case WsFrame::OPCODE_PING:
@@ -300,6 +316,10 @@ class WebSocket{
 	 */
 	private function handShake($data){
 		list($resource, $host, $origin, $key) = $this->getHTMLHeaders($data);
+
+		if(empty($key)){
+		    return false;
+        }
 
 		$upgrade  = "HTTP/1.1 101 Switching Protocol\r\n" .
 					"Upgrade: websocket\r\n" .

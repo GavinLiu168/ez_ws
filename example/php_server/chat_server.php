@@ -8,6 +8,7 @@ function dbLog($str){
 	echo $str.PHP_EOL;
 }
 
+
 date_default_timezone_set("PRC");
 
 $server = new WsServer("0.0.0.0",10086);
@@ -17,8 +18,8 @@ $server->on("open",function(WsServer $server,$resId){
 	dbLog("open:".$resId);
 });
 
-$server->on("close",function(WsServer $server,$resId){
-	dbLog("close:".$resId);
+$server->on("close",function(WsServer $server,$resId,$status_Code){
+	dbLog("close:".$resId." status_Code:".$status_Code);
 });
 $server->on("pong",function(WsServer $server,$resId){
 	dbLog("pong:".$resId);

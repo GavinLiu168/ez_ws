@@ -104,7 +104,7 @@ var DataLayer = function(ip,chat_port,music_port){
 
 		  	// 监听Socket的关闭
 		  	chatSocket.onclose = function(event) { 
-		    	//console.log('Client notified socket has closed',event);
+		    	console.log('Client notified socket has closed',event);
 		    	chatSocketEnable = false; 
 		  	}; 
 

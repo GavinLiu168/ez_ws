@@ -12,8 +12,7 @@ class WsWorker{
 	private $toWorkerChannel;
 
 	function __construct(){
-		  
-	}
+    }
 
 	public function setServer(&$server){
 		$this->server = $server;
@@ -99,20 +98,26 @@ class WsWorker{
 
 
 	function socket_select($wsSockets){
-			
+
+            $wsSockets[] = $this->server->master;
+
 			//解决慢系统是信号捕捉时导致的EINTR
-			#$res = @socket_select($wsSockets,$w,$e,NULL);
+			//$res = @socket_select($wsSockets,$w,$e,NULL);
 			$res = @socket_select($wsSockets,$w,$e,0,50000);
-			if(!$this->run)return;
+
+            if($e){
+                $this->log("select exception:".$e->getMessage());
+            }
 
 			if($res === false){
-				$this->log("select error:".socket_last_error());
+                $this->log("select error Id:".socket_last_error()." message:".socket_strerror(socket_last_error()));
 			}else{
 				foreach($wsSockets as $v){
 					if($v == $this->server->master){
 						$client = socket_accept($this->server->master);
 						if($client){
 							$this->accept($client);
+                            $this->log("accept cnt:".count($this->wsSockets));
 						}
 					}else{
 
@@ -164,10 +169,10 @@ class WsWorker{
 	}
 
 
-
+    //循环要交给server才能保证信号量函数能够执行
 	public function run(){
-		$this->wsSockets[] = $this->server->master;	
-		while($this->run){
+	    while($this->run){
+            if(!$this->run)return;
 			$this->socket_select($this->wsSockets);
 			$this->recBroadcast();
 		}
@@ -175,7 +180,7 @@ class WsWorker{
 
 	public function finish(){
 		$this->run = false;
-		foreach($this->wsSockets as $x){
+		foreach($this->wsSockets as $v){
 			$this->close($this->getResourceId($v));
 		}
 	}

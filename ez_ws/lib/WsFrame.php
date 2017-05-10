@@ -166,7 +166,7 @@ class WsFrame{
 	/**
 	 * get frame from buffer
 	 */
-	public static  function decode($data){
+	public static function decode($data){
 
 		if(strlen($data)<=2){
 			return false;
@@ -180,7 +180,7 @@ class WsFrame{
 
 		//get base info of head
 		$fin = ($head&0x8000) >> 15;
-		$opcode = ($head&0xf00) >>8;
+		$opcode = ($head&0xf00) >> 8;
 		$mask = ($head&0x80) >> 7;
 		$payload = ($head&0x7f);
 		$maskingKey = null;
@@ -191,7 +191,7 @@ class WsFrame{
 				return false;
 			}
 
-			//2Bytes lafter is payload
+			//2Bytes later is payload
 			$payload = unpack("n",substr($data,$offet,2))[1];
 			$offet += 2;
 		} elseif($payload === 127) {

@@ -21,9 +21,10 @@ $server->on("open",function(WsServer $server,$resId){
 	$mpt->start();
 });
 
-$server->on("close",function(WsServer $server,$resId){
-	dbLog("close:".$resId);
+$server->on("close",function(WsServer $server,$resId,$status_Code){
+    dbLog("close:".$resId." status_Code:".$status_Code);
 });
+
 $server->on("pong",function(WsServer $server,$resId){
 	dbLog("pong:".$resId);
 });
