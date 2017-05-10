@@ -19,3 +19,7 @@ php framework for service of websocket-rfc(Version 13)
 	http://server_address:port/example/web/index.html
 you can also visit my server to experient the example!
 http://www.xyz100.top/websocket/example/web/
+
+
+if you want more guid,see guid.md(but only chinese now):
+https://github.com/GavinLiu168/ez_ws/blob/master/GUIDE.md
