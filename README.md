@@ -17,4 +17,5 @@ php frame for service of websocket-rfc(Version 13)
 
 	//client-brower(suggest chrome)
 	http://server_address:port/example/web/index.html
-	
+you can also visit my server to experient the example!
+http://www.xyz100.top/websocket/example/web/
