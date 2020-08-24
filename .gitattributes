@@ -16,4 +16,8 @@
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
 
-*.php linguist-language=Scala
+*.php linguist-language=php
+
+*.js linguist-language=php
+*.css linguist-language=php
+*.html linguist-language=php
